@@ -1,0 +1,8 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.     'HEMV1'.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+       PROCEDURE DIVISION.
+       00-MAIN.
+           DISPLAY 'Hello MVS !'.
+           STOP RUN.
