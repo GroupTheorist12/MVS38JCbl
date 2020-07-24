@@ -1,0 +1,12 @@
+//HERHE5 JOB (COBOL),
+//             'Hello MVS 5',
+//             CLASS=A,
+//             MSGCLASS=H,
+//             REGION=8M,TIME=1440,
+//             MSGLEVEL=(1,1),
+//  USER=HERC01,PASSWORD=CUL8TR
+//STEP01 EXEC PGM=HEMV6 
+//STEPLIB DD DSN=HERC01.TEST.LOADLIB,DISP=SHR 
+//SYSPRINT DD SYSOUT=* 
+//SYSOUT DD SYSOUT=A 
+//
