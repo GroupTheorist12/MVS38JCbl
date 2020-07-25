@@ -1,14 +1,14 @@
 //HERCHE6 JOB  (SETUP),
-//             'TEST COBOL',
+//             'Hello MVS 6',
 //             CLASS=A,
 //             MSGCLASS=H,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
 //********************************************************************
 //*
-//* NAME: SYS2.JCLLIB(TESTCOB)
+//* NAME: HEMV6.JCL
 //*
-//* DESC: TEST COBOL INSTALLATION
+//* DESC: COBOL COMPILE, LINK, GO TEST
 //*
 //********************************************************************
 //HEMV6 EXEC COBUCLG
