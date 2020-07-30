@@ -1,7 +1,7 @@
 //HERHE1 JOB (COBOL),
 //             'Hello MVS 1',
 //             CLASS=A,
-//             MSGCLASS=H,
+//             MSGCLASS=A,
 //             REGION=8M,TIME=1440,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
