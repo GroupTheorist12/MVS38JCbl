@@ -1,7 +1,7 @@
 //HERCHE6 JOB  (SETUP),
 //             'Hello MVS 6',
 //             CLASS=A,
-//             MSGCLASS=H,
+//             MSGCLASS=A,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
 //********************************************************************

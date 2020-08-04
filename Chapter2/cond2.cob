@@ -10,9 +10,9 @@
        00-MAIN.
            MOVE 25 TO WS-NUM1.
            MOVE 15 TO WS-NUM2.
-           IF WS-NUM1 > WS-NUM2 THEN
-              DISPLAY 'WS-NUM1 > WS-NUM2'
+           IF WS-NUM1 IS GREATER THAN OR EQUAL TO WS-NUM2 THEN
+              DISPLAY 'WS-NUM1 IS GREATER THAN WS-NUM2'
            ELSE
-              DISPLAY 'WS-NUM2 > WS-NUM1'.
+              DISPLAY 'WS-NUM1 IS LESS THAN WS-NUM2'
       *    ENDIF        
            STOP RUN.

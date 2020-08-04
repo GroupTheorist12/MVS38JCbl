@@ -1,0 +1,9 @@
+{ 
+"action":"CreateJclForCopyingCobolFile",
+"jobname":"HERCALL2", 
+"desc":"Main Call",
+"pds":"HERC01.TEST.SOURCE",
+"cblin":"main.cob",
+"jclout":"main_2.jcl"
+}
+
