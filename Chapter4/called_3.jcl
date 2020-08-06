@@ -1,12 +1,12 @@
-//HERCALL2 JOB  (SETUP),
+//HERCALL3 JOB  (SETUP),
 //             'Called 3',
 //             CLASS=A,
-//             MSGCLASS=H,
+//             MSGCLASS=A,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
 //********************************************************************
 //*
-//* NAME: HERCALL2.JCL
+//* NAME: HERCALL3.JCL
 //*
 //* DESC: COBOL COMPILE
 //*
