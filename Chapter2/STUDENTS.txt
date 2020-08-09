@@ -1,5 +1,6 @@
-001BRAD RIGG           M                                                       
-002DUDE RIGG           M                                                       
-003FUNK RIGG           M                                                       
-004SETH RIGG           M                                                       
-005RUTH RIGG           M                                                       
+100BRAD RIGG           M                                                       
+101DUDE RIGG           M                                                       
+102FUNK RIGG           M                                                       
+103SETH RIGG           M                                                       
+104RUTH RIGG           M                                                       
+
