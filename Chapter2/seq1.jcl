@@ -1,3 +1,14 @@
+//HERSQ1 JOB (COBOL),
+//             'Seq Rd',
+//             CLASS=A,
+//             MSGCLASS=A,
+//             REGION=8M,TIME=1440,
+//             MSGLEVEL=(1,1),
+//  USER=HERC01,PASSWORD=CUL8TR
+//SEQ1   EXEC COBUCG,
+//         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+//COB.SYSPUNCH DD DUMMY
+//COB.SYSIN    DD *
 000001 IDENTIFICATION DIVISION.                                           
 000002 PROGRAM-ID.  'SEQ1'.                                             
 000003 ENVIRONMENT DIVISION.                                              
@@ -23,8 +34,8 @@
 000023  02 FILLER          PIC X(50).                                                         
 000024
 000025 WORKING-STORAGE SECTION.                                           
-000026 77 N PIC 99999999 COMP VALUE 5.                                    
-000027 77 WS-FS           PIC 9(02).                                
+000026 01 N PIC 99999999 COMP VALUE 5.                                    
+000027 01 WS-FS           PIC 9(02).                                
 000028 01 WS-EOF-SW       PIC X(01) VALUE 'N'.                      
 000029      88 EOF-SW         VALUE 'Y'.                               
 000030      88 NOT-EOF-SW     VALUE 'N'.                                
@@ -39,3 +50,12 @@
 000039      AT END MOVE 'Y' TO WS-EOF-SW.
 000040      IF NOT-EOF-SW 
 000041         DISPLAY 'CURRENT RECORD : ' SEQRDS-SYSIN-RECORD. 
+000042         EXIT.
+ /*
+//COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+//GO.SYSIN  DD * 
+//GO.SYSOUT DD SYSOUT=*
+//STUDENTS DD DSN=HERC01.TEST.CNTL(STUDENTS),DISP=SHR
+/*
+//        
+        
