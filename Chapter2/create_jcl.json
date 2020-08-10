@@ -1,0 +1,10 @@
+{ 
+ "action":"CreateJCLForCobolProg",
+ "jobname":"HERACC", 
+ "desc":"Accept Test",
+ "cblin":"accept.cob",
+ "jclout":"accept.jcl"
+}
+
+
+    

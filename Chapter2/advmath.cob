@@ -11,7 +11,7 @@
          01 WS-NC PIC 9(3).
 
        PROCEDURE DIVISION.
-           COMPUTE WS-NC= (WS-N1 * WS-N2) - (WS-NA / WS-NB) + WS-N3.
+           COMPUTE WS-NC = (WS-N1 * WS-N2) - (WS-NA / WS-NB) + WS-N3.
            DISPLAY 'WS-NUM1     : ' WS-N1
            DISPLAY 'WS-NUM2     : ' WS-N2
            DISPLAY 'WS-NUM3     : ' WS-N3
