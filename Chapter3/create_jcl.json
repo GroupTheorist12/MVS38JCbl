@@ -1,0 +1,10 @@
+{ 
+ "action":"CreateJCLForCobolProg",
+ "jobname":"HERTBL1", 
+ "desc":"Table 1",
+ "cblin":"tbl1.cob",
+ "jclout":"tbl1.jcl"
+}
+
+
+    
