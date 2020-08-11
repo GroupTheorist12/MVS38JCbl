@@ -1,9 +1,9 @@
 { 
  "action":"CreateJCLForCobolProg",
- "jobname":"HERTBL1", 
- "desc":"Table 1",
- "cblin":"tbl1.cob",
- "jclout":"tbl1.jcl"
+ "jobname":"HERCONL", 
+ "desc":"Cont",
+ "cblin":"contlin.cob",
+ "jclout":"contlin.jcl"
 }
 
 
