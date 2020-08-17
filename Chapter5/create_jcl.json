@@ -1,0 +1,10 @@
+{ 
+ "action":"CreateJCLForCobolProg",
+ "jobname":"HERCAR1", 
+ "desc":"Car Lst",
+ "cblin":"carrpt1.cob",
+ "jclout":"carrpt1.jcl"
+}
+
+
+    
