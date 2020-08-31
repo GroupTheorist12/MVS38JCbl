@@ -1,4 +1,4 @@
-//COBCLG   JOB (001),'COBOL COMPILE',CLASS=A,MSGCLASS=X                 00010000
+//COBCLG   JOB (001),'COBOL COMPILE',CLASS=A,MSGCLASS=A                 00010000
 //RWEX02   EXEC COBUCLG                                                 00020011
 //COB.SYSIN DD *                                                        00030011
 000100 IDENTIFICATION DIVISION.

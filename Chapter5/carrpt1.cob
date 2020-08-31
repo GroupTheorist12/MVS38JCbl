@@ -89,7 +89,7 @@
       
            CLOSE TRANSACTION-DATA,
                  REPORT-FILE.
-      
+           DISPLAY 'REPORT FINISHED' UPON CONSOLE.      
            STOP RUN.
       
        100-PROCESS-TRANSACTION-DATA.

@@ -1,4 +1,4 @@
-//HERC03S JOB MSGCLASS=H,NOTIFY=HERC01,
+//HERC03S JOB MSGCLASS=A,NOTIFY=HERC01,
 //            USER=HERC01,PASSWORD=CUL8TR
 //CREATE EXEC PGM=IEBGENER
 //SYSPRINT DD SYSOUT=*
@@ -1126,6 +1126,6 @@ Volvo           XC60                2008
 Volvo           XC70                2001                                        
 Volvo           XC90                2002                                        
 /*
-//SYSUT2   DD DSN=HERC01.TEST.CNTL(CARS),DISP=OLD
+//SYSUT2   DD DSN=HERC01.TEST.SEQDATA(CARS),DISP=OLD
 //SYSIN    DD DUMMY
 //
