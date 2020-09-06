@@ -1,0 +1,50 @@
+       IDENTIFICATION DIVISION.                                           
+       PROGRAM-ID.  'CURS2'.                                             
+       ENVIRONMENT DIVISION.                                              
+       CONFIGURATION SECTION.                                             
+       SOURCE-COMPUTER.  IBM-360.                                         
+       OBJECT-COMPUTER.  IBM-360.                                         
+       INPUT-OUTPUT SECTION.                                              
+       FILE-CONTROL.                                                      
+       DATA DIVISION.                                                     
+       FILE SECTION.                                                      
+
+       WORKING-STORAGE SECTION.                                           
+       EXEC SQL BEGIN DECLARE SECTION END-EXEC.
+         01  WS-CAR-MAKE             PIC X(30).
+         01  WS-CAR-MODEL            PIC X(30).
+         01  WS-CAR-PRODYR           PIC X(04).
+       EXEC SQL END DECLARE SECTION END-EXEC.
+
+ 
+       PROCEDURE DIVISION.                                                
+       MAIN-PART.                                                         
+           EXEC SQL DECLARE C1 CURSOR FOR                               
+           select MAKE, MODEL, cast(FYPROD as INTEGER) as PRODYR
+           from CARS 
+           where cast(FYPROD as INTEGER) > 2000
+           END-EXEC.
+
+           EXEC SQL OPEN C1 END-EXEC.                                   
+
+           PERFORM FETCH-LOOP THRU END-FETCH-LOOP 
+             UNTIL SQLCODE NOT EQUAL 0.
+
+       EXEC SQL CLOSE C1 END-EXEC.                                  
+           STOP RUN.
+    
+       FETCH-LOOP SECTION.
+           EXEC SQL FETCH C1 INTO 
+           :WS-CAR-MAKE, 
+           :WS-CAR-MODEL, 
+           :WS-CAR-PRODYR
+           END-EXEC.               
+           IF SQLCODE NOT EQUAL 0
+             GO TO END-FETCH-LOOP.
+           DISPLAY 'MAKE ' WS-CAR-MAKE
+           DISPLAY 'MODEL ' WS-CAR-MODEL
+           DISPLAY 'FIRST YR PROD    '  WS-CAR-PRODYR.
+       END-FETCH-LOOP. EXIT.                        
+         
+ 
+      
