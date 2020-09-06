@@ -1,0 +1,108 @@
+//H381516 JOB (COBOL),
+//             'Auto Run J1',
+//             CLASS=A,
+//             MSGCLASS=A,
+//             REGION=8M,TIME=1440,
+//             MSGLEVEL=(1,1),
+//  USER=HERC01,PASSWORD=CUL8TR
+//SEQSQL6   EXEC COBUCG,
+//         PARM.COB='FLAGW,LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+//COB.SYSPUNCH DD DUMMY
+//COB.SYSIN    DD *
+000001 IDENTIFICATION DIVISION.                                           
+000002 PROGRAM-ID.  'CURS2'.                                             
+000003 ENVIRONMENT DIVISION.                                              
+000004 CONFIGURATION SECTION.                                             
+000005 SOURCE-COMPUTER.  IBM-360.                                         
+000006 OBJECT-COMPUTER.  IBM-360.                                         
+000007 INPUT-OUTPUT SECTION.                                              
+000008 FILE-CONTROL.                                                      
+000009
+000010
+000011     SELECT QUERY1-SYSIN
+000012       ASSIGN TO UT-S-QUERY1.
+000013              
+000014 DATA DIVISION.                                                     
+000015 FILE SECTION.                                                      
+000016
+000017
+000018   FD QUERY1-SYSIN
+000019       RECORDING MODE IS F
+000020       RECORD CONTAINS 80 CHARACTERS
+000021       BLOCK  CONTAINS  0 RECORDS
+000022       LABEL RECORDS ARE OMITTED
+000023       DATA RECORD IS QUERY1-SYSIN-RECORD.
+000024   01  QUERY1-SYSIN-RECORD.
+000025     05 IDATA        PIC X(80).                    
+000026              
+000027              
+000028 WORKING-STORAGE SECTION.                                           
+000029
+000030
+000031   01 WS-CNT          PIC 9(1) VALUE 0.
+000032   01 WS-FLDS         PIC 9(1) VALUE 5.
+000033   01 SQLCODE         PIC 9(1) VALUE 0.
+000034   01 WS-EOF-SW       PIC X(01) VALUE 'N'.
+000035        88 EOF-SW         VALUE 'Y'.
+000036        88 NOT-EOF-SW     VALUE 'N'.
+000037              
+000038   01  WS-CAR-MAKE             PIC X(30).
+000039   01  WS-CAR-MODEL            PIC X(30).
+000040   01  WS-CAR-PRODYR           PIC X(04).
+000041
+000042 
+000043 PROCEDURE DIVISION.                                                
+000044 MAIN-PART.                                                         
+000045
+000046
+000047     OPEN INPUT QUERY1-SYSIN.
+000048              
+000049
+000050     PERFORM FETCH-LOOP THRU END-FETCH-LOOP 
+000051       UNTIL SQLCODE NOT EQUAL 0.
+000052
+000053
+000054     CLOSE QUERY1-SYSIN.
+000055              
+000056     STOP RUN.
+000057    
+000058 FETCH-LOOP SECTION.
+000059
+000060     IF NOT-EOF-SW THEN
+000061       READ QUERY1-SYSIN
+000062       AT END MOVE 'Y' TO WS-EOF-SW.
+000063     IF NOT-EOF-SW THEN
+000064       MOVE IDATA TO WS-CAR-MAKE.
+000065              
+000066     IF NOT-EOF-SW THEN
+000067       READ QUERY1-SYSIN
+000068       AT END MOVE 'Y' TO WS-EOF-SW.
+000069     IF NOT-EOF-SW THEN
+000070       MOVE IDATA TO WS-CAR-MODEL.
+000071              
+000072     IF NOT-EOF-SW THEN
+000073       READ QUERY1-SYSIN
+000074       AT END MOVE 'Y' TO WS-EOF-SW.
+000075     IF NOT-EOF-SW THEN
+000076       MOVE IDATA TO WS-CAR-PRODYR.
+000077              
+000078     IF EOF-SW THEN
+000079       MOVE 1 TO SQLCODE.
+000080              
+000081     IF SQLCODE NOT EQUAL 0
+000082       GO TO END-FETCH-LOOP.
+000083     DISPLAY 'MAKE ' WS-CAR-MAKE
+000084     DISPLAY 'MODEL ' WS-CAR-MODEL
+000085     DISPLAY 'FIRST YR PROD    '  WS-CAR-PRODYR.
+000086 END-FETCH-LOOP. EXIT.                        
+000087   
+000088 
+000089      
+ /*
+//COB.SYSLIB   DD DSNAME=SYS1.COBLIB,DISP=SHR
+//GO.SYSIN  DD * 
+//GO.SYSOUT DD SYSOUT=*
+//QUERY1 DD DSN=HERC01.TEST.SEQDATA(CARS2),DISP=SHR
+/*
+//        
+        
