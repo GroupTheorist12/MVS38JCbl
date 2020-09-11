@@ -1,0 +1,212 @@
+                        HH        HH  EEEEEEEEEEEE  RRRRRRRRRRR    CCCCCCCCCC     00000000         11       TTTTTTTTTTTT
+                       HH        HH  EEEEEEEEEEEE  RRRRRRRRRRRR  CCCCCCCCCCCC   0000000000       111       TTTTTTTTTTTT
+                      HH        HH  EE            RR        RR  CC        CC  00      0000     1111            TT
+                     HH        HH  EE            RR        RR  CC            00     00 00       11            TT
+                    HH        HH  EE            RR        RR  CC            00    00  00       11            TT
+                   HHHHHHHHHHHH  EEEEEEEE      RRRRRRRRRRRR  CC            00   00   00       11            TT
+                  HHHHHHHHHHHH  EEEEEEEE      RRRRRRRRRRR   CC            00  00    00       11            TT
+                 HH        HH  EE            RR    RR      CC            00 00     00       11            TT
+                HH        HH  EE            RR     RR     CC            0000      00       11            TT
+               HH        HH  EE            RR      RR    CC        CC  000       00       11            TT
+              HH        HH  EEEEEEEEEEEE  RR       RR   CCCCCCCCCCCC   0000000000    1111111111        TT
+             HH        HH  EEEEEEEEEEEE  RR        RR   CCCCCCCCCC     00000000     1111111111        TT
+
+                    JJJJJJJJJJ       11        9999999999    8888888888                                AAAAAAAAAA
+                    JJJJJJJJJJ      111       999999999999  888888888888                              AAAAAAAAAAAA
+                        JJ         1111       99        99  88        88                              AA        AA
+                        JJ           11       99        99  88        88                              AA        AA
+                        JJ           11       99        99   88      88                               AA        AA
+                        JJ           11       999999999999    88888888                                AAAAAAAAAAAA
+                        JJ           11       999999999999    88888888                                AAAAAAAAAAAA
+                        JJ           11                 99   88      88                               AA        AA
+                  JJ    JJ           11                 99  88        88                              AA        AA
+                  JJ    JJ           11       99        99  88        88                              AA        AA
+                  JJJJJJJJ       1111111111   999999999999  888888888888                              AA        AA
+                   JJJJJJ        1111111111    9999999999    8888888888                               AA        AA
+
+****A  START  JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198  START  A****
+****A  START  JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198  START  A****
+****A  START  JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198  START  A****
+****A  START  JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198  START  A****
+
+                                                J E S 2   J O B   L O G
+02.13.40 JOB  198  $HASP373 HERC01T  STARTED - INIT  1 - CLASS A - SYS BSP1
+02.13.40 JOB  198  IEF403I HERC01T - STARTED - TIME=02.13.40
+02.13.40 JOB  198  IEFACTRT - Stepname  Procstep  Program   Retcode
+02.13.40 JOB  198  HERC01T    STEP1               TESTDYNA  RC= 0000
+02.13.40 JOB  198  IEF404I HERC01T - ENDED - TIME=02.13.40
+02.13.40 JOB  198  $HASP395 HERC01T  ENDED
+
+------ JES2 JOB STATISTICS ------
+
+ 15 JAN  7 JOB EXECUTION DATE
+
+         8 CARDS READ
+
+       136 SYSOUT PRINT RECORDS
+
+         0 SYSOUT PUNCH RECORDS
+
+      0.00 MINUTES EXECUTION TIME
+
+    1     //HERC01T JOB MSGCLASS=A,MSGLEVEL=(1,1)                                 JOB  198
+          ***                                                                     00000020
+          ***  EXECUTE THE DYNALOAD TEST                                          00000030
+          ***                                                                     00000040
+    2     //STEP1 EXEC PGM=TESTDYNA                                               00000050
+    3     //STEPLIB DD DSN=HERC01.DYNALOAD.LOADLIB,DISP=SHR                       00000060
+    4     //SYSOUT  DD SYSOUT=*                                                   00000070
+          ***                                                                     00000080
+
+IEF236I ALLOC. FOR HERC01T STEP1
+IEF237I 280  ALLOCATED TO STEPLIB
+IEF237I 240  ALLOCATED TO SYS00042
+IEF237I JES2 ALLOCATED TO SYSOUT
+IEF142I HERC01T STEP1 - STEP WAS EXECUTED - COND CODE 0000
+IEF285I   HERC01.DYNALOAD.LOADLIB                      KEPT          *--------0
+IEF285I   VOL SER NOS= PUB002.
+IEF285I   SYS1.UCAT.TSO                                KEPT          *--------0
+IEF285I   VOL SER NOS= PUB000.
+IEF285I   JES2.JOB00198.SO0101                         SYSOUT
+IEF373I STEP /STEP1   / START 07015.0213
+IEF374I STEP /STEP1   / STOP  07015.0213 CPU    0MIN 00.06SEC SRB    0MIN 00.00SEC VIRT    56K SYS   192K
+************************************************************************************************************************************
+*     1. Jobstep of job: HERC01T     Stepname: STEP1       Program name: TESTDYNA   Executed on 15.01.07 from 02.13.40 to 02.13.40 *
+*         elapsed time  24:00:00,11                      CPU-Identifier:  BSP1           Page-in:      0                           *
+*             CPU time  00:00:00,06               Virtual Storage used:     56K         Page-out:      0                           *
+*           corr. CPU:  00:00:00,06   CPU time has been corrected by  1 / 1,0  multiplier                                          *
+*                                                                                                                                  *
+*     I/O Operation                                                                                                                *
+*     Number of records read via DD * or DD DATA:      0                                                                           *
+*     280.......0 240.......0 DMY.......0                                                                                          *
+*                                                                                                                                  *
+*                                          Charge for step (w/o SYSOUT):          0,10                                             *
+************************************************************************************************************************************
+IEF375I  JOB /HERC01T / START 07015.0213
+IEF376I  JOB /HERC01T / STOP  07015.0213 CPU    0MIN 00.06SEC SRB    0MIN 00.00SEC
+
+
+STARTING TESTDYNA WITH DEFAULT K MODE.
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00001,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00001,WS-SUB = 00001
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00002,WS-SUB = 00002
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00002,WS-SUB = 00002
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00003,WS-SUB = 00003
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00003,WS-SUB = 00003
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00004,WS-SUB = 00004
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00004,WS-SUB = 00004
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00005,WS-SUB = 00005
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00005,WS-SUB = 00005
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00006,WS-SUB = 00006
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00006,WS-SUB = 00006
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00007,WS-SUB = 00007
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00007,WS-SUB = 00007
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00008,WS-SUB = 00008
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00008,WS-SUB = 00008
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00009,WS-SUB = 00009
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00009,WS-SUB = 00009
+CALLING TESTDYN1 USING K
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00010,WS-SUB = 00010
+RETURNED FROM TESTDYN1,WS-CALL-MODE = K,WS-COUNTER = 00010,WS-SUB = 00010
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00011,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00011,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00012,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00012,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00013,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00013,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00014,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00014,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00015,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00015,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00016,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00016,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00017,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00017,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00018,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00018,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00019,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00019,WS-SUB = 00001
+CALLING TESTDYN1 USING R
+STARTING TESTDYN1.
+RETURNING WS-COUNTER = 00020,WS-SUB = 00001
+RETURNED FROM TESTDYN1,WS-CALL-MODE = R,WS-COUNTER = 00020,WS-SUB = 00001
+TESTDYNA ENDING
+
+
+
+
+
+
+
+
+
+
+
+
+                        HH        HH  EEEEEEEEEEEE  RRRRRRRRRRR    CCCCCCCCCC     00000000         11       TTTTTTTTTTTT
+                       HH        HH  EEEEEEEEEEEE  RRRRRRRRRRRR  CCCCCCCCCCCC   0000000000       111       TTTTTTTTTTTT
+                      HH        HH  EE            RR        RR  CC        CC  00      0000     1111            TT
+                     HH        HH  EE            RR        RR  CC            00     00 00       11            TT
+                    HH        HH  EE            RR        RR  CC            00    00  00       11            TT
+                   HHHHHHHHHHHH  EEEEEEEE      RRRRRRRRRRRR  CC            00   00   00       11            TT
+                  HHHHHHHHHHHH  EEEEEEEE      RRRRRRRRRRR   CC            00  00    00       11            TT
+                 HH        HH  EE            RR    RR      CC            00 00     00       11            TT
+                HH        HH  EE            RR     RR     CC            0000      00       11            TT
+               HH        HH  EE            RR      RR    CC        CC  000       00       11            TT
+              HH        HH  EEEEEEEEEEEE  RR       RR   CCCCCCCCCCCC   0000000000    1111111111        TT
+             HH        HH  EEEEEEEEEEEE  RR        RR   CCCCCCCCCC     00000000     1111111111        TT
+
+                    JJJJJJJJJJ       11        9999999999    8888888888                                AAAAAAAAAA
+                    JJJJJJJJJJ      111       999999999999  888888888888                              AAAAAAAAAAAA
+                        JJ         1111       99        99  88        88                              AA        AA
+                        JJ           11       99        99  88        88                              AA        AA
+                        JJ           11       99        99   88      88                               AA        AA
+                        JJ           11       999999999999    88888888                                AAAAAAAAAAAA
+                        JJ           11       999999999999    88888888                                AAAAAAAAAAAA
+                        JJ           11                 99   88      88                               AA        AA
+                  JJ    JJ           11                 99  88        88                              AA        AA
+                  JJ    JJ           11       99        99  88        88                              AA        AA
+                  JJJJJJJJ       1111111111   999999999999  888888888888                              AA        AA
+                   JJJJJJ        1111111111    9999999999    8888888888                               AA        AA
+
+****A   END   JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198   END   A****
+****A   END   JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198   END   A****
+****A   END   JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198   END   A****
+****A   END   JOB  198  HERC01T                         ROOM        2.13.40 AM 15 JAN  7  PRINTER1  SYS BSP1  JOB  198   END   A****
