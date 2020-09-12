@@ -1,0 +1,9 @@
+{ 
+"action":"CreateJclForCopyingCobolFile",
+"jobname":"HECALLEE", 
+"desc":"Callee",
+"pds":"HERC01.TEST.SOURCE",
+"cblin":"callee.cob",
+"jclout":"callee_cpy.jcl"
+}
+
