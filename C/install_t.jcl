@@ -8,16 +8,16 @@
 //IDCAMS  EXEC PGM=IDCAMS                                               00000070
 //SYSPRINT DD SYSOUT=*                                                  00000080
 //SYSIN    DD *                                                         00000090
- DELETE 'HERC01.TEST.ASM' NONVSAM PURGE                                 00000100
- DELETE 'HERC01.TEST.SOURCE' NONVSAM PURGE                              00000110
- DELETE 'HERC01.TEST.LOADLIB' NONVSAM PURGE                             00000120
+ DELETE 'HERC01.CODE.ASM' NONVSAM PURGE                                 00000100
+ DELETE 'HERC01.CODE.SOURCE' NONVSAM PURGE                              00000110
+ DELETE 'HERC01.CODE.LOADLIB' NONVSAM PURGE                             00000120
  SET MAXCC = 0                                                          00000130
 //*                                                                     00000140
 //*   NOW - CREATE THE PDS FOR THE ASM SOURCE CODE                      00000150
 //*                                                                     00000160
 //STEP1   EXEC PGM=IEBUPDTE,PARM=NEW,COND=(0,NE)                        00000170
-//SYSUT2   DD DSN=HERC01.TEST.ASM,DISP=(NEW,CATLG,DELETE),              00000180
-//         UNIT=DISK,SPACE=(TRK,(1,1,1)),VOL=SER=PUB002,                00000190
+//SYSUT2   DD DSN=HERC01.CODE.ASM,DISP=(NEW,CATLG,DELETE),              00000180
+//         UNIT=DISK,SPACE=(TRK,(1,1,1)),VOL=SER=PUB012,                00000190
 //         DCB=(RECFM=FB,LRECL=80,BLKSIZE=3120,DSORG=PO)                00000200
 //SYSPRINT DD SYSOUT=*                                                  00000210
 //SYSIN    DD *                                                         00000220
@@ -142,7 +142,7 @@
          ST    R5,4(,R13)          BACK CHAIN SAVE AREAS                00001410
          ST    R13,8(,R5)          FORWARD CHAIN SAVE AREAS             00001420
 *                                                                       00001430
-*---------------------------------------------------------------------* 00001440
+ 00001440
 * AT LEAST ONE PARM MUST BE PASSED.  THIS IS THE NAME OF THE LOAD     * 00001450
 * MODULE TO DYNAMICALY CALL.  IF THIS IS MISSING, THE MODULE WILL     * 00001460
 * ABORT WITH A U0001 ABEND CODE.                                      * 00001470
@@ -326,8 +326,8 @@ R15      EQU   15                                                       00002170
 //*  NOW - ADD THE COBOL TEST MODULES TO A PDS                          00003250
 //*                                                                     00003260
 //STEP3   EXEC PGM=IEBUPDTE,PARM=NEW,COND=(0,NE)                        00003270
-//SYSUT2   DD DSN=HERC01.TEST.SOURCE,DISP=(NEW,CATLG,DELETE),           00003280
-//         UNIT=DISK,SPACE=(TRK,(1,1,1)),VOL=SER=PUB002,                00003290
+//SYSUT2   DD DSN=HERC01.CODE.SOURCE,DISP=(NEW,CATLG,DELETE),           00003280
+//         UNIT=DISK,SPACE=(TRK,(1,1,1)),VOL=SER=PUB012,                00003290
 //         DCB=(RECFM=FB,LRECL=80,BLKSIZE=3120,DSORG=PO)                00003300
 //SYSPRINT DD SYSOUT=*                                                  00003310
 //SYSIN    DD DSN=&&COBOL,DISP=(OLD,PASS)                               00003320
@@ -335,23 +335,23 @@ R15      EQU   15                                                       00002170
 //*  NOW ASSEMBLE AND LINK THE DYNALOAD ROUTINE                         00003340
 //*                                                                     00003350
 //STEP4 EXEC ASMFCL,PARM.ASM='OBJ,NODECK'                               00003360
-//ASM.SYSIN DD DSN=HERC01.TEST.ASM(DYNALOAD),DISP=SHR                   00003370
-//LKED.SYSLMOD DD DSN=HERC01.TEST.LOADLIB(DYNALOAD),                    00003380
+//ASM.SYSIN DD DSN=HERC01.CODE.ASM(DYNALOAD),DISP=SHR                   00003370
+//LKED.SYSLMOD DD DSN=HERC01.CODE.LOADLIB(DYNALOAD),                    00003380
 //         DISP=(NEW,CATLG,DELETE),                                     00003390
-//         UNIT=DISK,VOL=SER=PUB002,                                    00003400
+//         UNIT=DISK,VOL=SER=PUB012,                                    00003400
 //         SPACE=(TRK,(2,2,2),RLSE),                                    00003410
 //         DCB=(RECFM=U,BLKSIZE=19069,DSORG=PO)                         00003420
 //*                                                                     00003430
 //*  NOW COMPILE THE COBOL DRIVER ROUTINE                               00003440
 //*                                                                     00003450
 //STEP5 EXEC COBUCL                                                     00003460
-//COB.SYSIN DD DSN=HERC01.TEST.SOURCE(TESTDYNA),DISP=SHR                00003470
+//COB.SYSIN DD DSN=HERC01.CODE.SOURCE(TESTDYNA),DISP=SHR                00003470
 //LKED.SYSLIB DD                                                        00003480
-//        DD DSN=HERC01.TEST.LOADLIB,DISP=SHR                           00003490
-//LKED.SYSLMOD DD DSN=HERC01.TEST.LOADLIB(TESTDYNA),DISP=SHR            00003500
+//        DD DSN=HERC01.CODE.LOADLIB,DISP=SHR                           00003490
+//LKED.SYSLMOD DD DSN=HERC01.CODE.LOADLIB(TESTDYNA),DISP=SHR            00003500
 //*                                                                     00003510
 //*  NOW COMPILE THE COBOL TEST SUBROUTINE                              00003520
 //*                                                                     00003530
 //STEP6 EXEC COBUCL                                                     00003540
-//COB.SYSIN DD DSN=HERC01.TEST.SOURCE(TESTDYN1),DISP=SHR                00003550
-//LKED.SYSLMOD DD DSN=HERC01.TEST.LOADLIB(TESTDYN1),DISP=SHR            00003560
+//COB.SYSIN DD DSN=HERC01.CODE.SOURCE(TESTDYN1),DISP=SHR                00003550
+//LKED.SYSLMOD DD DSN=HERC01.CODE.LOADLIB(TESTDYN1),DISP=SHR            00003560

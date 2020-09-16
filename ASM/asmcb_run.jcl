@@ -1,0 +1,11 @@
+//HEHI2 JOB (COBOL), 
+//             'Asm HI2',
+//             CLASS=A,
+//             MSGCLASS=A,
+//             REGION=8M,TIME=1440,
+//             MSGLEVEL=(1,1),
+//  USER=HERC01,PASSWORD=CUL8TR
+//ASMASMA1  EXEC PGM=ASMASMA1
+//STEPLIB   DD DSN=HERC01.CODE.LOADLIB,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//

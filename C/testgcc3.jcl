@@ -4,7 +4,7 @@
 //*  EXECUTE THE HASHME TEST                                            00000030
 //*  ,COND=((12,EQ),EVEN)                                               00000040
 //STEP1 EXEC PGM=HASHME                                                 00000050
-//STEPLIB DD DSN=HERC01.TEST.LOADLIB,DISP=SHR                           00000060
+//STEPLIB DD DSN=HERC01.CODE.LOADLIB,DISP=SHR                           00000060
 //SYSOUT  DD SYSOUT=*                                                   00000070
 //SYSPRINT DD   SYSOUT=*,DCB=(LRECL=132,BLKSIZE=1320)
 //SYSABEND DD   SYSOUT=*

@@ -1,7 +1,7 @@
 //HECALLEE JOB (COBOL), 
 //             'Callee',
 //             CLASS=A,
-//             MSGCLASS=H,
+//             MSGCLASS=A,
 //             REGION=8M,TIME=1440,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
@@ -26,7 +26,7 @@
 000015     GOBACK.      
 000016           
 /*
-//SYSUT2   DD DSN=HERC01.TEST.SOURCE(CALLEE),DISP=OLD
+//SYSUT2   DD DSN=HERC01.CODE.SOURCE(CALLEE),DISP=OLD
 //SYSIN    DD DUMMY
 //
 

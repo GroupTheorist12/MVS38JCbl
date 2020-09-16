@@ -1,0 +1,13 @@
+//HEAACL2 JOB (COBOL), 
+//             'Assemble, Link 2',
+//             CLASS=A,
+//             MSGCLASS=A,
+//             REGION=8M,TIME=1440,
+//             MSGLEVEL=(1,1),
+//  USER=HERC01,PASSWORD=CUL8TR
+//ASM EXEC ASMFCLG,PARM.ASM='OBJ,NODECK'                                00003360
+//SYSLIB DD DSN=HERC01.CODE.LOADLIB,DISP=SHR                            00000060
+//ASM.SYSIN DD DSN=HERC01.CODE.ASM(ASMASMA1),DISP=SHR                   00003370
+//LKED.SYSLIB DD DSN=HERC01.CODE.LOADLIB,DISP=SHR                       00003480
+//LKED.SYSLIN DD DSN=HERC01.CODE.LOADLIB(ASMASMAA),DISP=SHR
+//

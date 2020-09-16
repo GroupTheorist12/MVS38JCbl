@@ -3,7 +3,7 @@
 //*                                                                     00000020
 //*  EXECUTE THE DYNALOAD TEST                                          00000030
 //*                                                                     00000040
-//STEP1 EXEC PGM=CALLER                                                 00000050
-//STEPLIB DD DSN=HERC01.CODE.LOADLIB,DISP=SHR                           00000060
+//STEP1 EXEC PGM=COBCALL                                                00000050
+//STEPLIB DD DSN=HERC01.TEST.LOADLIB,DISP=SHR                           00000060
 //SYSOUT  DD SYSOUT=*                                                   00000070
 //*                                                                     00000080
