@@ -1,0 +1,26 @@
+//ASMFCLG  PROC MAC='SYS1.MACLIB',MAC1='SYS1.MACLIB',                   00000100
+//         MAC2='SYS1.MACLIB',MAC3='SYS1.MACLIB',SOUT='*'               00000200
+//ASM      EXEC PGM=IFOX00,PARM=OBJ,REGION=128K                         00000300
+//SYSLIB   DD   DSN=&MAC,DISP=SHR                                       00000400
+//         DD   DSN=&MAC1,DISP=SHR                                      00000500
+//         DD   DSN=&MAC2,DISP=SHR                                      00000600
+//         DD   DSN=&MAC3,DISP=SHR                                      00000700
+//SYSUT1   DD   DSN=&&SYSUT1,UNIT=SYSSQ,SPACE=(1700,(600,100)),         00000800
+//             SEP=(SYSLIB)                                             00000900
+//SYSUT2   DD   DSN=&&SYSUT2,UNIT=SYSSQ,SPACE=(1700,(300,50)),          00001000
+//             SEP=(SYSLIB,SYSUT1)                                      00001100
+//SYSUT3   DD   DSN=&&SYSUT3,UNIT=SYSSQ,SPACE=(1700,(300,50))           00001200
+//SYSPRINT DD   SYSOUT=&SOUT,DCB=BLKSIZE=1089                           00001300
+//SYSPUNCH DD   SYSOUT=B                                                00001400
+//SYSGO    DD   DSN=&&OBJSET,UNIT=SYSSQ,SPACE=(80,(200,50)),            00001500
+//             DISP=(MOD,PASS)                                          00001600
+//LKED     EXEC PGM=IEWL,PARM=(XREF,LET,LIST,NCAL),REGION=128K,         00001700
+//             COND=(8,LT,ASM)                                          00001800
+//SYSLIN   DD   DSN=&&OBJSET,DISP=(OLD,DELETE)                          00001900
+//         DD   DDNAME=SYSIN                                            00002000
+//SYSLMOD  DD   DSN=&&GOSET(GO),UNIT=SYSDA,SPACE=(1024,(50,20,1)),      00002100
+//             DISP=(MOD,PASS)                                          00002200
+//SYSUT1   DD   DSN=&&SYSUT1,UNIT=(SYSDA,SEP=(SYSLIN,SYSLMOD)),         00002300
+//             SPACE=(1024,(50,20))                                     00002400
+//SYSPRINT DD   SYSOUT=&SOUT                                            00002500
+//GO       EXEC PGM=*.LKED.SYSLMOD,COND=((8,LT,ASM),(4,LT,LKED))        00002600

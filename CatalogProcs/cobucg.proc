@@ -1,0 +1,14 @@
+//COBUCG PROC SOUT='*'                                                  00000100
+//COB EXEC PGM=IKFCBL00,                                                00000200
+//         PARM='LOAD,SIZE=2048K,BUF=1024K'                             00000300
+//SYSPRINT DD SYSOUT=&SOUT                                              00000400
+//SYSUT1 DD UNIT=SYSDA,SPACE=(460,(700,100))                            00000500
+//SYSUT2 DD UNIT=SYSDA,SPACE=(460,(700,100))                            00000600
+//SYSUT3 DD UNIT=SYSDA,SPACE=(460,(700,100))                            00000700
+//SYSUT4 DD UNIT=SYSDA,SPACE=(460,(700,100))                            00000800
+//SYSLIN DD DSNAME=&LOADSET,DISP=(MOD,PASS),                            00000900
+//             UNIT=SYSDA,SPACE=(80,(500,100))                          00001000
+//GO EXEC PGM=LOADER,PARM='MAP,LET',COND=(5,LT,COB)                     00001100
+//SYSLIN DD DSNAME=*.COB.SYSLIN,DISP=(OLD,DELETE)                       00001200
+//SYSLOUT DD SYSOUT=&SOUT                                               00001300
+//SYSLIB DD DSNAME=SYS1.COBLIB,DISP=SHR                                 00001400
