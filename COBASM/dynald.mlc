@@ -1,0 +1,195 @@
+*                                                                     * 
+         PRINT ON,GEN,NODATA                                            
+*---------------------------------------------------------------------* 
+*                                                                     * 
+* THIS ROUTINE IS DESIGNED TO PROVIDE DYNAMIC PROGRAM LOADING         * 
+* FOR PROGRAMS COMPILED WITH COMPILERS THAT ONLY SUPPORT STATIC       * 
+* CALLS.  MVT COBOL IS AN EXAMPLE OF THIS.                            * 
+*                                                                     * 
+* EXAMPLE:   IN MVT COBOL,                                            * 
+*      CALL 'PROGRAMA' USING PARM-1 PARM-2.                           * 
+* IT IS NECESSARY TO LINK THE OBJECT MODULE FOR THE PROGRAMA          * 
+* ROUTINE TO EACH CALLING COBOL PROGRAM.  THE PROGRAM CODE AND        * 
+* WORKING STORAGE ARE PRESERVED BETWEEN CALLS.                        * 
+*                                                                     * 
+* IN MVS COBOL, THE STATIC CALL WILL FUNCTION THE SAME WAY.  AN       * 
+* EXTENSTION TO COBOL ALLOWS FOR DYNAMIC CALLS TO SUBROUTINES.        * 
+*                                                                     * 
+*     WORKING-STORAGE SECTION.                                        * 
+*     ...                                                             * 
+*         05  WS-PGM-NAME        PIC X(8)  VALUE SPACES.              * 
+*     ...                                                             * 
+*      ...                                                            * 
+*      PROCEDURE DIVISION.                                            * 
+*      ...                                                            * 
+*      MOVE 'PROGRAMA' TO WS-PGM-NAME.                                * 
+*      CALL WS-PGM-NAME USING PARM-1 PARM-2.                          * 
+*                                                                     * 
+* THIS CALL RESULTS IN 'PROGRAMA' BEING LOADED AT RUN TIME INTO       * 
+* MEMORY AND THEN CALLED.   EACH TIME A MODULE IS DYNAMICALLY CALLED, * 
+* MVS CHECKS TO SEE IF THE LOAD MODULE IS RENTRANT OR RESUABLE.  IF   * 
+* SO, THE COPY OF THE PROGRAM IN MEMORY IS REUSED.  IF NOT, A NEW     * 
+* COPY IF THE PROGRAM IS LOADED FROM DISK AND CALLED.                 * 
+*                                                                     * 
+* THE MVS COBOL DYNAMIC CALL CAN BE SIMULATED IN MVT COBOL BY         * 
+* CALLING AN ASSEMBLER PROGRAM WHICH WILL LOAD THE SUBROUTINE AND     * 
+* PASS THE OPTIONAL PARAMETERS.                                       * 
+*                                                                     * 
+* EXAMPLE:                                                            * 
+*     WORKING-STORAGE SECTION.                                        * 
+*     01  WS-PGM-BLK.                                                 * 
+*         05  WS-PGM-NAME        PIC X(8)  VALUE SPACES.              * 
+*         05  WS-PGM-ADDR        PIC X(4)  VALUE LOW-VALUES.          * 
+*         05  WS-CALL-MODE       PIC X     VALUE 'K'.                 * 
+*         05  FILLER             PIC X(3)  VALUE LOW-VALUES.          * 
+*      ...                                                            * 
+*      PROCEDURE DIVISION.                                            * 
+*      ...                                                            * 
+*                                                                     * 
+*      MOVE 'PROGRAMA' TO WS-PGM-NAME.                                * 
+*      CALL 'DYNALOAD' USING WS-PGM-BLK  PARM-1 PARM-2.               * 
+*                                                                     * 
+*                                                                     * 
+*  NOTES:                                                             * 
+*    - THE WS-PGM-ADDR FIELD MUST BE INITIALIZED TO LOW-VALUES        * 
+*      BEFORE THE FIRST CALL.  DO NOT CHANGE THE VALUE OF             * 
+*      THIS FIELD.  IF IT IS NOT LOW-VALUES, DYNALOAD ASSUMES         * 
+*      THIS IS THE ADDRESS IN MEMORY OF PROGRAMA.                     * 
+*                                                                     * 
+*    - THE WS-CALL-MODE  MUST BE 'K' OR 'R'.                          * 
+*        K INDICATES KEEP THE WORKING STORAGE AND MODULE FROM         * 
+*          LAST CALL.  IF WS-PGM-ADDR IS NOT LOW-VALUES, THIS         * 
+*          ADDRESS IS CALLED.                                         * 
+*                                                                     * 
+*        R INDICATE REFRESH MODULE FROM DISK, THUS CLEARING           * 
+*          WORKING STORAGE BACK TO THE INITIAL VALUES.                * 
+*                                                                     * 
+*       YOU MAY DEFINE AND USE AS MANY WS-PGM-BLK AS NEEDED.          * 
+*                                                                     * 
+* IT IS NECESSARY TO LINK THE OBJECT MODULE FOR THE DYNALOAD          * 
+* ROUTINE TO EACH CALLING PROGRAM. IT IS ALSO NECESSARY TO LINK       * 
+* THE PROGRAMA AS AN EXECUTABLE MODULE.  THE BENEFIT OF THIS IS THE   * 
+* MODULE IS NOT STATIC LINKED INTO ALL MODULES WHICH CALL IT.         * 
+* IF THE ROUTINE IS CHANGED, AS LONG AS THE PARM FORMATS ARE          * 
+* THE SAME, THE CALLING MODULES WILL NOT NEED TO BE CHANGED.          * 
+*                                                                     * 
+* FOR EXAMPLE, AN MVT COBOL APPLICATION CONSISTS OF 100 PROGRAMS,     * 
+* EACH OF WHICH CALL AN IO MODULE CALLED IOMOD.  USING STATIC CALLS,  * 
+* A COPY OF IOMOD IS LINK EDITED INTO EACH OF THE 100 LOAD MODULES.   * 
+* MAKING A CHANGE TO IOMOD WOULD REQUIRE 100 LOAD MODULES TO BE       * 
+* RELINKED.  USING DYNALOAD, ONLY IOMOD WOULD NEED TO BE RELINKED.    * 
+* THE 100 CALLING MODULES WOULD ONLY NEED TO BE TESTED.               * 
+*                                                                     * 
+* I HAVE USED THIS ROUTINE SINCE THE 1970'S.  IT WILL WORK WITH       * 
+* MVS COBOL BUT IT COULD CONFUSE DEBUGGERS.                           * 
+*                                                                     * 
+* THIS CODE IS PLACED IN THE PUBLIC DOMAIN AND MAY BE FREELY USED     * 
+* AND INCORPORATED INTO DERIVED WORKS AS LONG AS ATTRIBUTION TO THE   * 
+* ORIGINAL AUTHORSHIP REMAINS IN ANY DISTRIBUTED COPIES OF THE ALC    * 
+* SOURCE.                                                             * 
+*                                                                     * 
+* REWRITTEN DECEMBER, 2006 BY ED LISS                                 * 
+* HTTP://WWW.SUMMERMOON.COM/HERCULES/                                 * 
+*                                                                     * 
+*---------------------------------------------------------------------* 
+         EJECT                                                          
+*                                                                       
+         LCLC  &SYSECT                                                  
+&SYSECT  SETC  'DYNALOAD'          ROUTINE IDENTIFICATION               
+*                                                                       
+&SYSECT  CSECT                                                          
+*                                                                       
+@IDENT01 B     @IDENT04(R15)       BRANCH AROUND IDENT CONSTANTS        
+         DC    AL1(@IDENT03-@IDENT02)                                   
+@IDENT02 DC    C'&SYSECT V1'                                            
+         DC    C'&SYSDATE &SYSTIME - '                                  
+         DC    C'DYNAMIC LOAD ROUTINE FOR MVT COBOL'                    
+@IDENT03 DS    0H                                                       
+@IDENT04 EQU   *-@IDENT01                                               
+*                                                                       
+         SAVE  (14,12)                                                  
+*                                                                       
+         BALR  R12,0               BASE REGISTERS ARE 12                
+         USING *,R12                                                    
+*                                                                       
+         LR    R5,R13              COPY CALLER'S SAVEAREA ADDR          
+         LA    R13,SAVEAREA        ESTABLISH MY SAVEAREA                
+         ST    R5,4(,R13)          BACK CHAIN SAVE AREAS                
+         ST    R13,8(,R5)          FORWARD CHAIN SAVE AREAS             
+*                                                                       
+*---------------------------------------------------------------------* 
+* AT LEAST ONE PARM MUST BE PASSED.  THIS IS THE NAME OF THE LOAD     * 
+* MODULE TO DYNAMICALY CALL.  IF THIS IS MISSING, THE MODULE WILL     * 
+* ABORT WITH A U0001 ABEND CODE.                                      * 
+* THIS MODULE WILL STRIP OFF THE PROGRAM NAME AND PASS THE REMAINING  * 
+* PARMS, IF ANY, TO THE SUBROUTINE BEING CALLED.                      * 
+* IF THERE ARE NO PARMS TO PASS, R1 IS SET TO ZEROS.                  * 
+*---------------------------------------------------------------------* 
+         LTR   R1,R1                                                    
+         BNZ   PARMFND             BRANCH IF PARM LIST PRESENT          
+         ABEND 1,,,USER                                                 
+PARMFND  DS    0H                                                       
+         LR    R2,R1               COPY PARMLIST ADDR TO R2             
+         L     R3,0(,R2)           GET ADDR OF PROGRAM NAME             
+         MVC   PGMBLK,0(R3)        GET PGMBLK - NAME, ADDR, FUNC        
+         TM    0(R2),X'80'         CHECK FOR LAST PARM                  
+         BZ    OPTPARMS            MORE PARMS FOUND                     
+         SR    R4,R4               SET PARM ADDR TO ZERO                
+         B     DYNACALL                                                 
+OPTPARMS DS    0H                                                       
+         LA    R4,4(,R2)           ADVANCE TO NEXT PARM                 
+DYNACALL DS    0H                                                       
+         L     R0,PGMADDR          GET ADDR IN MEMORY                   
+         CLC   PGMADDR,=4X'00'     IS IS ZEROS                          
+         BE    DOLOAD                                                   
+         CLI   PGMFUNC,C'K'        KEEP CALL?                           
+         BE    SKIPLOAD                                                 
+         CLI   PGMFUNC,C'R'                                             
+         BE    DOLOAD                                                   
+         ABEND 2,,,USER            ABORT IF NO CORRECT PARM             
+*                                                                       
+DOLOAD   DS    0H                                                       
+         LOAD  EPLOC=PGM                                                
+         ST    R0,PGMADDR                                               
+SKIPLOAD DS    0H                                                       
+         MVC   0(L'PGMBLK,R3),PGMBLK PUT CTL BLK BACK IN CALLERS WS     
+         LR    R1,R4               PUT PARMLIST IN R1                   
+         LR    R15,R0              COPY MODULE ADDR TO R15              
+         BALR  R14,R15             CALL LOADED PGM                      
+GOBACK   DS    0H                                                       
+*---------------------------------------------------------------------* 
+* RETURN TO CALLING PROGRAM WITH ZERO RETURN CODE IN R15              * 
+*---------------------------------------------------------------------* 
+         L     R13,4(,R13)    RESET TO CALLERS SAVE AREA                
+         RETURN (14,12),RC=0                                            
+*                                                                       
+         DS    0F                                                       
+PGMBLK   DS    0CL16                                                    
+PGM      DC    CL8' '                                                   
+PGMADDR  DC    F'0'                                                     
+PGMFUNC  DC    C' '                                                     
+         DS    CL3                                                      
+*                                                                       
+*---------------------------------------------------------------------* 
+* MY REGISTER SAVE AREA                                               * 
+*---------------------------------------------------------------------* 
+SAVEAREA DS    18F                                                      
+*                                                                       
+R0       EQU   0                                                        
+R1       EQU   1                                                        
+R2       EQU   2                                                        
+R3       EQU   3                                                        
+R4       EQU   4                                                        
+R5       EQU   5                                                        
+R6       EQU   6                                                        
+R7       EQU   7                                                        
+R8       EQU   8                                                        
+R9       EQU   9                                                        
+R10      EQU   10                                                       
+R11      EQU   11                                                       
+R12      EQU   12                                                       
+R13      EQU   13                                                       
+R14      EQU   14                                                       
+R15      EQU   15                                                       
+*                                                                       
+         END                                                            
