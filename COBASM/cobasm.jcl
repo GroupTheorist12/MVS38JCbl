@@ -17,7 +17,8 @@
          01 WS-STUDENT-NAME PIC A(15) VALUE 'TIM            '.
          01 W-PARM-FOR-ASM.
            05  W-PFA-LENGTH COMP PIC S9(4) VALUE +8.
-           05  W-PFA-PARM-DATA PIC X(8) VALUE 'HI MAN  '.      
+           05  W-PFA-PARM-DATA PIC X(8) VALUE 'HI MAN  '.
+           05  FILLER              PIC XXX    VALUE LOW-VALUES.      
        PROCEDURE DIVISION.
            CALL 'ASMASMAA' USING W-PARM-FOR-ASM.
            STOP RUN.

@@ -47,7 +47,7 @@
 *      ...                                                            * 
 *                                                                     * 
 *      MOVE 'PROGRAMA' TO WS-PGM-NAME.                                * 
-*      CALL 'DYNALOAD' USING WS-PGM-BLK  PARM-1 PARM-2.               * 
+*      CALL 'DYNALD' USING WS-PGM-BLK  PARM-1 PARM-2.               * 
 *                                                                     * 
 *                                                                     * 
 *  NOTES:                                                             * 
@@ -95,7 +95,7 @@
          EJECT                                                          
 *                                                                       
          LCLC  &SYSECT                                                  
-&SYSECT  SETC  'DYNALOAD'          ROUTINE IDENTIFICATION               
+&SYSECT  SETC  'DYNALD'          ROUTINE IDENTIFICATION               
 *                                                                       
 &SYSECT  CSECT                                                          
 *                                                                       

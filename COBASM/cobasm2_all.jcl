@@ -1,14 +1,48 @@
-//HEAAA JOB (COBOL), 
-//             'Assemble',
+//HEHI3 JOB (COBOL), 
+//             'Asm HI3',
 //             CLASS=A,
 //             MSGCLASS=A,
 //             REGION=8M,TIME=1440,
 //             MSGLEVEL=(1,1),
 //  USER=HERC01,PASSWORD=CUL8TR
-//IEBGENER EXEC PGM=IEBGENER,REGION=128K
-//SYSIN    DD  DUMMY
-//SYSPRINT DD  SYSOUT=A
-//SYSUT1   DD  *
+//COB  EXEC  PGM=IKFCBL00,                          
+//           PARM='LOAD,SUPMAP,SIZE=2048K,BUF=1024K'
+//SYSUT1 DD UNIT=SYSDA,SPACE=(460,(700,100))        
+//SYSUT2 DD UNIT=SYSDA,SPACE=(460,(700,100))        
+//SYSUT3 DD UNIT=SYSDA,SPACE=(460,(700,100))        
+//SYSUT4 DD UNIT=SYSDA,SPACE=(460,(700,100))        
+//SYSPRINT  DD SYSOUT=*
+//SYSLIN DD DSNAME=&&OBJ,DISP=(NEW,PASS),UNIT=SYSDA,            
+//             SPACE=(80,(500,100))                                
+//SYSIN  DD *
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.     'MAIN'.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+         WORKING-STORAGE SECTION.
+         01  WS-MODULE-BLK-1.                                             
+             05  WS-MODULE-NAME1     PIC X(8)   VALUE 'TESTDYN1'.         
+             05  WS-MODULE-ADDR      PIC X(4)   VALUE LOW-VALUES.         
+             05  WS-CALL-MODE1       PIC X      VALUE 'K'.                
+             05  FILLER              PIC XXX    VALUE LOW-VALUES.         
+       PROCEDURE DIVISION.
+           CALL 'ASMASMAA' USING WS-MODULE-BLK-1.
+           DISPLAY 'ADDR ' WS-MODULE-ADDR.
+           STOP RUN.
+/*
+//SYSOUT DD SYSOUT=* 
+//SYSPUNCH DD SYSOUT=* 
+//SYSLIB DD   DSNAME=SYS1.COBLIB,DISP=SHR                          
+//ASMF2     EXEC PGM=IFOX00,REGION=2048K
+//SYSLIB    DD DSN=SYS1.AMODGEN,DISP=SHR
+//          DD DSN=SYS1.AMACLIB,DISP=SHR
+//          DD DSN=SYS2.MACLIB,DISP=SHR 
+//SYSUT1    DD DISP=(NEW,DELETE),SPACE=(1700,(900,100)),UNIT=SYSDA
+//SYSUT2    DD DISP=(NEW,DELETE),SPACE=(1700,(600,100)),UNIT=SYSDA
+//SYSUT3    DD DISP=(NEW,DELETE),SPACE=(1700,(600,100)),UNIT=SYSDA
+//SYSPRINT  DD SYSOUT=*
+//SYSPUNCH  DD DSN=&&OBJ,UNIT=SYSDA,SPACE=(CYL,1),DISP=(MOD,PASS)
+//SYSIN     DD * 
 ASMASMAA CSECT
 ***********************************************************************
 *             ASMASMAA.MLC - This is an HLASM Program                 *
@@ -44,21 +78,22 @@ ASMASMAA CSECT
 *
          LR    R2,R1           * Put addr of addr list into reg-2
 *
-         WTO   '* ASMASMAA is starting...'
-*
-         LA    R3,TOOMANY      * Limit loop count to reg-3 value
-         LA    R4,4            * Set reg-4 to four (Loop Limit)
-*
-         WTO   'Found some parms'
-ADDRLOOP EQU   *
-         L     R5,0(,R2)       * Use reg-5 for WTO address
-         WTO   MF=(E,(R5))
-         TM    0(R2),X'80'     * Is this last parameter...
-         BO    EOJAOK          * If yes, Branch out of loop...
-         LA    R2,4(,R2)               increment to next addr in list
-         BCT   R4,ADDRLOOP       Else, decrement parameter count
-         B     TOOMANY         * Too-many or invalid parm list
-*
+PARMFND  DS    0H                                                       
+         L     R3,0(,R2)           GET ADDR OF PROGRAM NAME             
+         MVC   PGMBLK,0(R3)        GET PGMBLK - NAME, ADDR, FUNC        
+         WTO   'Loaded parms'
+         CLI   PGMFUNC,C'K'                                   
+         BE    KKK
+
+NKKK     DS 0H
+         WTO   'Loaded parms and NOT K'    
+
+KKK     DS 0H
+         WTO   'Loaded parms and K'    
+         MVC   WTOTEXT(8),PGM
+         WTO   MF=(E,WTOBLOCK)
+         MVC   PGMADDR,IPFX
+         MVC   0(L'PGMBLK,R3),PGMBLK
 *---------------------------------------------------------------------*
 * NORMAL END-OF-JOB
 * RETURN to the CALLING PROGRAM OR OPERATING SYSTEM
@@ -95,7 +130,19 @@ TOOMANY  EQU   *
 * Define Constants and EQUates
 *
          DS    0F            + Force alignment
-*
+IPFX     DC    CL4'BRAD'
+
+PGMBLK   DS    0CL16                                                    
+PGM      DC    CL8' '                                                   
+PGMADDR  DC    F'0'                                                     
+PGMFUNC  DC    C' '                                                     
+         DS    CL3    
+
+WTOBLOCK EQU   *
+         DC    H'80'         
+         DC    H'0'                     
+WTOTEXT  DC    CL76' '
+
 * Register EQUates
 *
 R0       EQU   0
@@ -117,6 +164,19 @@ R15      EQU   15
 *
          END
 /*
-//SYSUT2   DD DSN=HERC01.CODE.ASM(ASMASMAA),DISP=OLD
-//SYSIN    DD DUMMY
+//LKED     EXEC PGM=IEWL,
+//             COND=(5,LT,COB),
+//             PARM='LIST,MAP,XREF,LET,RENT'
+//SYSPRINT  DD SYSOUT=*
+//SYSLMOD   DD DSN=HERC01.CODE.LOADLIB,DISP=SHR
+//SYSLIB DD   DSNAME=SYS1.COBLIB,DISP=SHR                          
+//SYSUT1    DD UNIT=SYSDA,SPACE=(TRK,(5,5))
+//SYSLIN    DD DSN=&&OBJ,DISP=(OLD,DELETE)
+//          DD *
+ NAME COBASM2(R)
+//*-------------------------------------------------------------------
+//COBASM2    EXEC PGM=COBASM2
+//STEPLIB   DD DSN=HERC01.CODE.LOADLIB,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSOUT DD SYSOUT=* 
 //
