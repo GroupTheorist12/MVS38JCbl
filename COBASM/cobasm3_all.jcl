@@ -26,8 +26,8 @@
              05  WS-CALL-MODE1       PIC X      VALUE 'K'.                
              05  FILLER              PIC XXX    VALUE LOW-VALUES.         
        PROCEDURE DIVISION.
-           CALL 'ASMASMAA' USING WS-MODULE-BLK-1.
-           DISPLAY 'ADDR ' WS-MODULE-ADDR.
+           CALL 'ASMASMAA'.
+           DISPLAY 'RETURNED FROM CALL'.
            STOP RUN.
 /*
 //SYSOUT DD SYSOUT=* 
@@ -72,6 +72,8 @@ ASMASMAA CSECT
          SAVE  (14,12)
          BALR  12,0              PREPARE A BASE REGISTER
          USING *,12              ESTABLISH BASE REGISTER
+         ST    R1,SAVER1           * Save Register 1
+
 *
          LTR   R1,R1
          BZ    NOPARMS
@@ -89,28 +91,16 @@ NKKK     DS 0H
          WTO   'Loaded parms and NOT K'    
 
 KKK     DS 0H
-         
+         WTO   'Load file'    
+
          WTO   'Loaded parms and K'    
          MVC   WTOTEXT(8),PGM
          WTO   MF=(E,WTOBLOCK)
          MVC   PGMADDR,IPFX
          MVC   0(L'PGMBLK,R3),PGMBLK
-         
-         WTO   'Starting timer'
-         STIMER WAIT,BINTVL=P2VAL
-         WTO   'Ending Timer'
-         
-         OPEN  (TEACHERS,INPUT)   open TEACHERS
-         LTR   R15,R15            test return code
-         BNE   ABEND08            abort if open failed
-LOOP     GET   TEACHERS,IREC      Read a single teacher record
-         MVC   WTOTEXT(27),IREC
-         WTO   MF=(E,WTOBLOCK)
-         B     LOOP               Repeat
+
 
 *---------------------------------------------------------------------*
-
-ATEND   CLOSE TEACHERS
 
 * NORMAL END-OF-JOB
 * RETURN to the CALLING PROGRAM OR OPERATING SYSTEM
@@ -133,7 +123,15 @@ ABEND08  EQU   *
 *
 NOPARMS  EQU   *
          WTO   '* ASMASMAA called with zero parameters'
-         RETURN (14,12),RC=4
+         OPEN  (TEACHERS,INPUT)   open TEACHERS
+LOOP     GET   TEACHERS,IREC      Read a single teacher record
+         MVC   WTOTEXT(27),IREC
+         WTO   MF=(E,WTOBLOCK)
+         B     LOOP               Repeat
+
+ATEND    CLOSE TEACHERS
+         B     EOJAOK  
+*         RETURN (14,12),RC=4
 *
 ***********************************************************************
 * Post a too-many-paramters message...
@@ -146,9 +144,17 @@ TOOMANY  EQU   *
 ***********************************************************************
 * Define Constants and EQUates
 *
+SAVER1   DC    F'0'
+IREC     DS    0CL80              Teacher record     
+ITID     DS    CL3                Teacher ID nbr
+ITNAME   DS    CL15               Teacher name
+ITDEG    DS    CL4                Highest degree
+ITTEN    DS    CL1                Tenured?
+ITPHONE  DS    CL4                Phone nbr
+FILL     DS    CL53               Fill   
+
          DS    0F            + Force alignment
 IPFX     DC    CL4'BRAD'
-P2VAL    DC    F'600'
 PGMBLK   DS    0CL16                                                    
 PGM      DC    CL8' '                                                   
 PGMADDR  DC    F'0'                                                     
@@ -161,17 +167,12 @@ WTOBLOCK EQU   *
 WTOTEXT  DC    CL76' '
 
 SPACE8   DC    CL8' '
+ZERO     DS    F
 
-IREC     DS    0CL80              Teacher record     
-ITID     DS    CL3                Teacher ID nbr
-ITNAME   DS    CL15               Teacher name
-ITDEG    DS    CL4                Highest degree
-ITTEN    DS    CL1                Tenured?
-ITPHONE  DS    CL4                Phone nbr
-FILL     DS    CL53               Fill   
 
 TEACHERS DCB   DSORG=PS,MACRF=GM,EODAD=ATEND,DDNAME=TEACHERS,          X
                RECFM=FBA,LRECL=80,BLKSIZE=0               
+
 
 * Register EQUates
 *
@@ -203,9 +204,9 @@ R15      EQU   15
 //SYSUT1    DD UNIT=SYSDA,SPACE=(TRK,(5,5))
 //SYSLIN    DD DSN=&&OBJ,DISP=(OLD,DELETE)
 //          DD *
- NAME COBASM2(R)
+ NAME COBASM3(R)
 //*-------------------------------------------------------------------
-//COBASM2    EXEC PGM=COBASM2
+//COBASM2    EXEC PGM=COBASM3
 //STEPLIB   DD DSN=HERC01.CODE.LOADLIB,DISP=SHR
 //SYSPRINT DD SYSOUT=*
 //SYSOUT DD SYSOUT=* 

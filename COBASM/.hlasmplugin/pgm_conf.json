@@ -1,0 +1,9 @@
+{
+  "pgms": [
+    {
+      "program": "dynald.mlc",
+      "pgroup": ""
+    }
+  ],
+  "alwaysRecognize": []
+}
