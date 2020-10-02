@@ -71,6 +71,7 @@ PROG13D  CSECT
 
          OPEN  (TEACHERS,INPUT)   open TEACHERS
 LOOP     GET   TEACHERS,IREC      Read a single teacher record
+         MVC   WTOTEXT(76),SPACE76
          MVC   WTOTEXT(27),IREC
          WTO   MF=(E,WTOBLOCK)
          B     LOOP               Repeat
@@ -96,6 +97,7 @@ WTOBLOCK EQU   *
 WTOTEXT  DC    CL76' '
 
 SPACE8   DC    CL8' '
+SPACE76   DC    CL76' '
 ZERO     DS    F
 
 
