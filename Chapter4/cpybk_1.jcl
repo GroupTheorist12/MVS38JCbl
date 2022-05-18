@@ -1,4 +1,3 @@
-
 //HECPYBK JOB (COBOL), 
 //             'Copy Book',
 //             CLASS=A,

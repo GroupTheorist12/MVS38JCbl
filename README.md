@@ -10,7 +10,7 @@
 * BAL calling BAL
 * Sequential file processing in COBOL and BAL
 
-### None coding tasks and utilities such as:
+###  None coding tasks and utilities such as:
 * Installing MVS 3.8 on Linux 
 * Getting Free 3270 emulator.
 * Installing free PDF print spooler (prtspool by Tim Pinkawa)
@@ -18,27 +18,48 @@
 * JCL to allocate PDS's and PS's.
 
 ## Table of contents
-* [Introduction](#introduction)
-* [Chapter 1](#chapter-1)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Features](#features)
-* [Status](#status)
-* [Inspiration](#inspiration)
-* [Contact](#contact)
+- [Introduction](#introduction)
+  
+    * [Installing MVS](#installing-mvs)
+    * [Installing VS Code](#installing-vs-code)
+    
+- [Chapter 1](#chapter-1)
+
+  * [Setting up printer](#setting-up-printer)
+
+    
+
+- [Chapter 2](#chapter-2)
+
+- [Chapter 3](#chapter-3)
+
+- [Chapter 4](#chapter-4)
+
+- [Features](#features)
+
+- [Status](#status)
+
+- [Inspiration](#inspiration)
+
+- [Contact](#contact)
 
 ## Introduction
 Add more general information about project. What the purpose of the project is? Motivation?
+## Installing MVS
 
 ## Chapter 1
 ![Example screenshot](./img/screenshot.png)
 
-## Technologies
+### Setting Up Printer
+
+
+
+## Chapter 2
 * Tech 1 - version 1.0
 * Tech 2 - version 2.0
 * Tech 3 - version 3.0
 
-## Setup
+## Chapter 3
 Describe how to install / setup your local environement / add link to demo version.
 
 ## Code Examples
